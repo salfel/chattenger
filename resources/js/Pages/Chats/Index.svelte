@@ -7,6 +7,8 @@
     import type { Chats } from '@/Types';
 
     export let chats: Chats;
+
+    console.log(chats)
 </script>
 
 <div>

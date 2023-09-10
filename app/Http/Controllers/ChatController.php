@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class ChatController extends Controller
@@ -22,7 +23,6 @@ class ChatController extends Controller
                 $query->whereNot('users.id', $user->id);
             }])
             ->get();
-        // dd($chats->toArray());
 
         return Inertia::render('Chats/Index', [
             'chats' => $chats

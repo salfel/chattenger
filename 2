@@ -18,7 +18,8 @@ class AuthController extends Controller
 
     public function authenticate(LoginRequest $request)
     {
-        if(Auth::attempt($request->validated(), true)) {
+        Auth::logout();
+        if(Auth::attempt($request->validated())) {
             Session::regenerate();
 
             return to_route('chats.index');

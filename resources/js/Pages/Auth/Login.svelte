@@ -8,11 +8,9 @@
     import FormInput from '@/Components/FormInput.svelte';
 
     const form = useForm({
-        email: '',
-        password: ''
+        email: 'felix.salcher@gmail.com',
+        password: 'password'
     })
-
-    $: console.log($form)
 
     function handleSubmit() {
         $form.post(route('auth.authenticate'))

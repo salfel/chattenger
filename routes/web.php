@@ -24,7 +24,7 @@ Route::get('/', function() {
 Route::prefix('auth')->controller(AuthController::class)->group(function() {
     Route::get('login', 'login')->name('auth.login');
     Route::get('register', 'register')->name('auth.register');
-    Route::post('store', 'store')->name('auth.login');
+    Route::post('store', 'store')->name('auth.store');
     Route::post('authenticate', 'authenticate')->name('auth.authenticate');
     Route::post('logout', 'logout')->name('auth.logout');
 });
