@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { Chat } from "@/Types";
-    import { router } from '@inertiajs/svelte'
+    import type { Chat, Message, User } from "@/Types";
+    import { router, page } from '@inertiajs/svelte'
     import { Icon, PaperAirplane } from "svelte-hero-icons";
+    import { messages } from "@/utils/stores";
     import route from "ziggy-js";
 
     export let chat: Chat;
@@ -15,8 +16,21 @@
             messagable_type: 'App\\Models\\Chat'
             }, {
                 preserveScroll: true,
+                onBefore: () => {
+                    $messages = [
+                        ...$messages,
+                        {
+                            id: '',
+                            body: message,
+                            updated_at: new Date().toString(),
+                            created_at: new Date().toString(),
+                            author: $page.props.user as User
+                        }
+                    ]
+                },
                 onFinish: () => {
-                    message = ''
+                    message = '';
+                    $messages = $page.props.chat.messages
                 }
             })
     }

@@ -13,7 +13,7 @@ class MessageSeeder extends Seeder
         $chats = Chat::all();
 
         foreach($chats as $chat) {
-            for($i = 0; $i < 25; $i++) {
+            for($i = 0; $i < 10; $i++) {
                 $random = random_int(0, 1);
                 $users = $chat->users()->get();
 

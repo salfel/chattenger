@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
-<main class="bg-gray-900 text-gray-200">
+<main class="min-h-screen bg-gray-900 text-gray-200">
     <slot />
 </main>

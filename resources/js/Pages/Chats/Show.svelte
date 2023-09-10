@@ -9,12 +9,15 @@
     import { ChatBubbleOvalLeftEllipsis, Icon, UserCircle } from 'svelte-hero-icons'
     import { Link } from '@inertiajs/svelte'
     import route from 'ziggy-js';
+    import { messages } from '@/utils/stores'
     import { afterUpdate } from 'svelte';
+    import ChatPreview from '@/Components/ChatPreview.svelte';
 
     export let chat: Chat;
-    // export let user: User;
+    export let user: User;
 
     let container: HTMLElement;
+    $messages = chat.messages;
 
     afterUpdate(() => {
         setTimeout(() => container.scrollTo({ top: container.scrollHeight }), 0)
@@ -22,7 +25,12 @@
 
     Echo.private(`chats.${chat.id}`)
         .listen('MessageSent', function(e: { message: MessageType }) {
-            console.log(e.message)
+            if (e.message.author.id !== user.id) {
+                $messages = [
+                    ...$messages,
+                    e.message
+                ]
+            }
         })
 </script>
 
@@ -54,10 +62,12 @@
         </div>
     </div>
 
-    <div class="pt-6 flex-1 overflow-y-auto" bind:this={container} scroll-region>
-        {#each chat.messages as message}
-            <Message {message} />
-        {/each}
+    <div class="py-6 flex-1 overflow-y-auto" bind:this={container} scroll-region>
+        <div class="min-h-full flex flex-col justify-end gap-5">
+            {#each $messages as message}
+                <Message {message} />
+            {/each}
+        </div>
     </div>
 
     <SendMessage {chat} />

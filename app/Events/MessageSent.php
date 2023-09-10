@@ -29,6 +29,7 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn(): Channel
     {
+        $this->message->load('author');
         if ($this->message->messagable_type === Chat::class) {
             return new PrivateChannel('chats.'.$this->message->messagable_id);
         }

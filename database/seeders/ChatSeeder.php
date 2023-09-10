@@ -19,11 +19,15 @@ class ChatSeeder extends Seeder
 
         $created = new Collection();
         foreach($users as $user) {
-            $created[] = $user->id;
             foreach($users as $_user) {
-                if ($created->has($_user->id) || $user->id === $_user->id) {
+                if ($user->id === $_user->id || $created->filter(fn($value) => !count(array_diff($value, [$user->id, $_user->id])))->count()) {
                     continue;
                 }
+
+                $created->push([
+                    $user->id,
+                    $_user->id
+                ]);
 
                 $chat = Chat::factory()->create();
 
