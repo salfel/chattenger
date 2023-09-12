@@ -58,8 +58,6 @@ class ChatController extends Controller
             }])
             ->first();
 
-        // dd($chat->toArray());
-
         return Inertia::render('Chats/Show', [
             'chat' => $chat
         ]);

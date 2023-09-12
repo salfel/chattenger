@@ -1,9 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import preprocess from 'svelte-preprocess'
-import typescript from '@rollup/plugin-typescript'
-import path from 'path'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
     plugins: [
@@ -11,9 +8,6 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        svelte({
-            preprocess: preprocess(),
-        }),
-        typescript(),
+        react()
     ],
 });
