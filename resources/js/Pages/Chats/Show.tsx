@@ -10,6 +10,17 @@ type Props = {
     user: User
 }
 
+function listenToEcho() {
+    let listened = false;
+
+    return () => {
+        if (!listened) {
+            listened = true;
+
+        }
+    }
+}
+
 function Show({ chat, user }: Props) {
     const container = useRef<HTMLDivElement>(null);
     const [messages, setMessages] = useState(chat.messages);
@@ -18,15 +29,20 @@ function Show({ chat, user }: Props) {
         container.current?.scrollTo({ top: container.current?.scrollHeight });
     }, [messages])
 
-    Echo.private(`chats.${chat.id}`)
-        .listen('MessageSent', function(e: { message: MessageType }) {
-            if (e.message.author.id !== user.id) {
-                setMessages(messages => [
-                    ...messages,
-                    e.message
-                ])
-            }
-        })
+    useEffect(() => {
+        Echo.private(`chats.${chat.id}`)
+            .listen('MessageSent', function(e: { message: MessageType }) {
+                if (e.message.author.id !== user.id) {
+                    setMessages(messages => [
+                        ...messages,
+                        e.message
+                    ])
+                }
+            })
+
+        return () => Echo.leaveChannel(`chats.${chat.id}`)
+    }, [])
+
 
     return (
         <>
@@ -35,7 +51,7 @@ function Show({ chat, user }: Props) {
             <div className="h-screen flex flex-col">
                 <Header user={chat.user} />
                 <div className="py-6 flex-1 overflow-y-auto" ref={container}>
-                    <div className="min-h-full flex flex-col justify-end gap-5" scroll-region ref={container}>
+                    <div className="min-h-full flex flex-col justify-end gap-5" scroll-region="true" ref={container}>
                         {messages.map(message =>
                             <Message message={message} key={message.id} />
                         )}

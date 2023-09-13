@@ -10,7 +10,7 @@ type Props = {
 
 export default function Header({ user }: Props) {
     return (
-        <div className="flex justify-between bg-gray-800 px-12 py-4">
+        <div className="flex justify-between bg-gray-800/70 px-12 py-4">
             <div className="flex items-center gap-3">
                 {user.profile_picture
                     ? <img src={user.profile_picture} className="h-8 w-8" alt={user.name} />

@@ -29,8 +29,10 @@ Route::prefix('auth')->controller(AuthController::class)->group(function() {
     Route::post('logout', 'logout')->name('auth.logout');
 });
 
-Route::get('chats', [ChatController::class, 'index'])->name('chats.index');
-Route::get('chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
-// Route::resource('chats', ChatController::class);
+Route::middleware('auth')->group(function() {
+    Route::get('chats', [ChatController::class, 'index'])->name('chats.index');
+    Route::get('chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
+
+});
 
 Route::resource('messages', MessageController::class);

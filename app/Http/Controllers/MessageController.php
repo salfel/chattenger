@@ -23,8 +23,6 @@ class MessageController extends Controller
             'author_id' => Auth::id(),
         ]);
 
-        // dd($message);
-
         MessageSent::dispatch($message);
 
         return back();
