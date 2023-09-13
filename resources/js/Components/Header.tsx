@@ -5,10 +5,11 @@ import { UserCircleIcon } from '@heroicons/react/24/solid'
 import route from 'ziggy-js'
 
 type Props = {
-    user: User
+    user: User,
+    active: boolean
 }
 
-export default function Header({ user }: Props) {
+export default function Header({ user, active }: Props) {
     return (
         <div className="flex justify-between bg-gray-800/70 px-12 py-4">
             <div className="flex items-center gap-3">
@@ -17,7 +18,12 @@ export default function Header({ user }: Props) {
                     : <UserCircleIcon className="text-gray-400 h-10 w-10" />
                 }
 
-                <h1 className="text-gray-100 font-bold text-xl">{user.name}</h1>
+                <h1 className="relative text-gray-100 font-bold text-xl">
+                    <span>{user.name}</span>
+                    {active && (
+                        <i className="block w-2 h-2 absolute top-0 -right-4 bg-green-500 rounded-xl"></i>
+                    )}
+                </h1>
             </div>
 
             <div className="flex items-center gap-8">

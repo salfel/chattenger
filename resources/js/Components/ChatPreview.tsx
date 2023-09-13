@@ -8,7 +8,6 @@ type Props = {
 }
 
 export default function ChatPreview({ chat }: Props) {
-    console.log(chat)
     return (
         <div className="flex items-center gap-5 px-5 py-3 border border-gray-700">
             {chat.user.profile_picture

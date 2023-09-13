@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('chats.{chat}', function (User $user, Chat $chat) {
-    return $chat->users()->where('users.id', $user->id)->get();
+Broadcast::channel('chats.{chatId}', function (User $user, string $chatId) {
+    if ($user->isUserOfChat($chatId)) {
+        return $user;
+    }
+    return null;
 });

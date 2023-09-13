@@ -95,4 +95,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Chat::class, 'chat_users');
     }
+
+    public function isUserOfChat(string $id): bool
+    {
+        return $this->chats()->where('chats.id', $id)->first()->count() > 0;
+    }
 }

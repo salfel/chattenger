@@ -23,7 +23,7 @@ class MessageController extends Controller
             'author_id' => Auth::id(),
         ]);
 
-        MessageSent::dispatch($message);
+        broadcast(new MessageSent($message))->toOthers();
 
         return back();
     }
